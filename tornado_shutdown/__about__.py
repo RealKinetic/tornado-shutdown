@@ -17,4 +17,4 @@ description = """
 Utility library to help graceful shutdown of Tornado processes.
 """.strip()
 
-url = 'https://github.com/RealKinetic/tornado_shutdown'
+url = 'https://github.com/RealKinetic/tornado-shutdown'
