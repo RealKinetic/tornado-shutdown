@@ -7,7 +7,7 @@ __all__ = [
     'version',
 ]
 
-version_info = (1, 0, 0)
+version_info = (1, 1, 0)
 version = '.'.join(map(bytes, version_info))
 
 maintainer = 'Nick Joyce'
