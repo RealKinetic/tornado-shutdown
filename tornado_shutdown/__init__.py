@@ -65,6 +65,7 @@ class TornadoShutdown(object):
 
         self.funcs = []
         self._handlers_installed = False
+        self.shutting_down = False
 
     def at_shutdown(self, func):
         if not self._handlers_installed:
@@ -84,8 +85,18 @@ class TornadoShutdown(object):
         self._handlers_installed = True
 
     def handle_signal(self, sig, frame):
-        LOG.warn('Caught signal %d', sig)
         io_loop = ioloop.IOLoop.current()
+
+        if self.shutting_down:
+            # repeated signal - just kill the loop
+            LOG.warn('Caught signal %d again, terminating ..', sig)
+            io_loop.stop()
+
+            return
+
+        self.shutting_down = True
+
+        LOG.warn('Caught signal %d', sig)
 
         io_loop.add_callback_from_signal(self.shutdown, io_loop)
 
